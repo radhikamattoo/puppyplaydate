@@ -1,0 +1,107 @@
+body{
+  background: url('http://static.ddmcdn.com/gif/blogs/dnews-files-2015-01-hubble-galaxy-wide-150130-jpg.jpg');
+  /*http://static.ddmcdn.com/gif/blogs/dnews-files-2015-01-hubble-galaxy-wide-150130-jpg.jpg*/
+  color:white;
+}
+h1, h2, h4{
+  color: #0099cc;
+}
+
+table {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+  margin:20px;
+  color:white;
+  font-size: 1.1em;
+}
+table th {
+	padding:21px 25px 22px 25px;
+	border-top:1px solid #fafafa;
+	border-bottom:1px solid #e0e0e0;
+  text-align: center;
+}
+
+
+li{
+  list-style: none;
+  text-align: center;
+}
+
+.btn {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn.btn-primary-outline{
+   background-color: transparent;
+    border: 2px solid #0099cc;
+}
+
+.btn.btn-primary-outline:hover{
+    background: #0099cc;
+    color: white;
+    border-color: #0099cc;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn-primary {
+    background: #0099cc;
+    color: #ffffff;
+}
+input{
+  color:black;
+}
+.btn-primary:hover {
+    background-color: transparent;
+    color: #0099cc;
+    border: 2px solid #0099cc;
+    padding: 12px 22px;
+}
+.btn.btn-secondary{
+  color:white;
+}
+.btn.btn-secondary{
+  border: 2px solid #999999;
+  background: #999999;
+  color: white
+}
+.btn.btn-secondary:hover{
+  background-color: transparent;
+  color: #999999;
+  padding: 14px 24px;
+}
+
+.form-group.required .control-label:before {
+  content:"*";
+  color:red;
+}
+
+.error{
+  color: red;
+}
+.hideMessage{
+  display: none;
+}
+
+#logout, #help{
+  padding: 4px 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 8px;
+}
+#logout:hover{
+  padding: 2px 6px;
+}
+#name{
+  color: #0099cc;
+}
+::-webkit-input-placeholder {
+  text-align: center;
+}
