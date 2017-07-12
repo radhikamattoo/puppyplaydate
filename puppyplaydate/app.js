@@ -4,14 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var flash = require('connect-flash');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+
 var mongoose = require('mongoose');
+var session = require('express-session');
 
 var app = express();
 
-//database setup
+// Database Setup
 require('./database');
 var User = mongoose.model('User');
 var Dog = mongoose.model('Dog');
@@ -20,16 +22,30 @@ var Dog = mongoose.model('Dog');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+var sessionOptions = {
+		secret: 'secret thang',
+		saveUninitialized: false,
+		resave: false
+};
+
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session(sessionOptions));
 
+// Authentication
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Routing
+var routes = require('./routes/index');
+var users = require('./routes/users');
 app.use('/', routes);
-app.use('/users', users);
+app.use('/', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
