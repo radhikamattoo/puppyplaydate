@@ -1,22 +1,13 @@
-<h1>Puppy Playdate</h1>
-<h4>Welcome!</h4> <br>
-
 <div id= 'errorDiv' class='error'>
 {{#if error}}
   <br><br> <h4 class="error"> {{error}} </h4><br><br>
 {{/if}}
 </div> <br>
 
-<!-- <div>
-<a class="btn btn-primary-outline" href="/auth/facebook" role="button">Signup with Facebook</a> <br> <br>
-</div> -->
-
 <form method="POST" action="" name='signup'>
-Full Name: <input type="text" name="name" id="fullname"><br><br>
+First Name: <input type="text" name="name" id="firstname"><br><br>
+Last Name: <input type="text" name="name" id="firstname"><br><br>
 Username: <input type="text" name="username" id="username"> <br><br>
 Password: <input type="password" name="password" id="password"> <br> <br>
 <button class="btn btn-primary" type="submit" value="Sign Up" name="userCheck" id='signUpBtn'>Sign Up </button><br><br>
 </form>
-<div>
-  <p><a href="/login" class="btn btn-secondary" role="button"> Login </a></p><br>
-</div>

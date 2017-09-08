@@ -41,5 +41,30 @@ router.get('/auth/facebook/callback',
 router.get('/signup', function(req, res, next){
   res.render('signup');
 });
+/* POST signup page. */
+router.post('/signup', function(req,res,next){
+  // create new user
+  var newUser = new User({
+    name: {first:req.body.firstname, last: req.body.lastname},
+    username: req.body.username,
+    password: req.body.password,
+    admin: false,
+    created_at: new Date().toString()
+  });
 
+  // save and redirect
+  newUser.save(function(err){
+    if(err)  console.log(err);
+    else {
+      req.login(newUser, function(err){
+        if(err){return next(err);}
+        return res.redirect('/');
+      });
+    }
+  });
+});
+router.get('/logout', function(req,res,next){
+  req.logout();
+  res.redirect('/');
+});
 module.exports = router;

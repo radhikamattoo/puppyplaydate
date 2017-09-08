@@ -24,6 +24,7 @@ var Dog = mongoose.model('Dog');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.set('view options', { layout: 'layout' });
 
 var sessionOptions = {
 		secret: 'secret thang',
