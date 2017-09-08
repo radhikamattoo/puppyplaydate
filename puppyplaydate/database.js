@@ -16,9 +16,9 @@ var User = new Schema({
   password: { type: String, required: true },
   admin: Boolean,
   location: Number, //zip code
-  age: Number,
   created_at: Date,
-  dogs: [Dog]
+  dogs: [Dog],
+  friends: [this]
 });
 
 mongoose.model('Dog', Dog);
