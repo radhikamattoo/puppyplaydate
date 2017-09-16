@@ -1,8 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const googleMapsClient = require('@google/maps').createClient({
+  key: 'AIzaSyDEveioqvDh55H1_lOP44u58uHputstsRs'
+});
 // Dog schema
-var Dog = new Schema({
+const Dog = new Schema({
   name: String,
   age: Number,
   breed: String,
@@ -10,7 +12,7 @@ var Dog = new Schema({
 });
 
 // User schema
-var User = new Schema({
+const User = new Schema({
   name: {first:String, last:String},
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },

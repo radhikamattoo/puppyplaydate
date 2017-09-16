@@ -1,12 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var ObjectId = require('mongodb').ObjectID;
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').Strategy;
-var LocalStrategy = require('passport-local').Strategy;
+/**
+* Handles Auth via Login, Signup, and Logout
+**/
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const ObjectId = require('mongodb').ObjectID;
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   //Check session data for automatic redirect
@@ -44,11 +48,12 @@ router.get('/signup', function(req, res, next){
 /* POST signup page. */
 router.post('/signup', function(req,res,next){
   // create new user
-  var newUser = new User({
+  const newUser = new User({
     name: {first:req.body.firstname, last: req.body.lastname},
     username: req.body.username,
     password: req.body.password,
-    admin: false,
+    location: Number(req.body.location),
+    admin: true,
     created_at: new Date().toString()
   });
 
@@ -63,6 +68,8 @@ router.post('/signup', function(req,res,next){
     }
   });
 });
+
+
 router.get('/logout', function(req,res,next){
   req.logout();
   res.redirect('/');

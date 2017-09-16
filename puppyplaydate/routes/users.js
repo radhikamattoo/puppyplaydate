@@ -1,8 +1,12 @@
-var express = require('express');
-var router = express.Router();
+/**
+* Handles Chat, Profile, and Home pages
+*
+**/
+const express = require('express');
+const router = express.Router();
 
 // AUTHENTICATED ROUTES
-app.use(function(req, res, next) {
+router.use(function(req, res, next) {
   if (req.user){
       return next();
   }
@@ -11,7 +15,7 @@ app.use(function(req, res, next) {
   }
 });
 
-/* GET users listing. */
+/* GET user home page */
 router.get('/:username',function(req, res, next) {
   console.log(req.user);
 
@@ -19,3 +23,9 @@ router.get('/:username',function(req, res, next) {
 });
 
 module.exports = router;
+
+/* GET user profile page */
+
+/* GET user edit page */
+
+/* GET user chat page */

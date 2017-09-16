@@ -1,32 +1,31 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var flash = require('connect-flash');
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').Strategy;
-var LocalStrategy = require('passport-local').Strategy;
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const flash = require('connect-flash');
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 
-var mongoose = require('mongoose');
-var session = require('express-session');
+const mongoose = require('mongoose');
+const session = require('express-session');
 
-var app = express();
-
+const app = express();
+app.disable('view cache');
 // Database Setup
 require('./database');
-var User = mongoose.model('User');
-var Dog = mongoose.model('Dog');
+const User = mongoose.model('User');
+const Dog = mongoose.model('Dog');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.set('view options', { layout: 'layout' });
 
-var sessionOptions = {
+const sessionOptions = {
 		secret: 'secret thang',
 		saveUninitialized: false,
 		resave: false
@@ -41,8 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(sessionOptions));
 
 // Routing
-var routes = require('./routes/index');
-var users = require('./routes/users');
+const routes = require('./routes/index');
+const users = require('./routes/users');
 
 //Authentication using Passport
 app.use(flash());
@@ -76,21 +75,25 @@ passport.use(new LocalStrategy(
 passport.use(new FacebookStrategy({
     clientID: 274235506408825,
     clientSecret: '761b127e8ec855dd8056c0c4f5894b13',
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+		profileFields: ['id', 'displayName', 'location']
   },
   function(accessToken, refreshToken, profile, done) {
-
 		//get info to create user
-		var password = profile.id;
-		var firstName;
-		var lastName;
-		var username;
+		const location = profile._json.location.id
+		const password = profile.id;
+		const location = profile.location;
+		console.log(profile);
+		console.log(location);
+		let firstName;
+		let lastName;
+		let username;
 
 		if(profile.name.givenName){
 			firstName = profile.name.givenName;
 			lastName = profile.name.familyName;
 		}else{
-			var fullname = profile.displayName;
+			let fullname = profile.displayName;
 			firstName = fullname.split(" ")[0];
 			lastName = fullname.split(" ")[1];
 		}
@@ -101,12 +104,13 @@ passport.use(new FacebookStrategy({
 		}
     User.findOne({username:username, password:password}, function(err, user,created){
 			if(!user){
-				var date = new Date().toString();
-				var newUser = new User({
+				const date = new Date().toString();
+				const newUser = new User({
 					name: {first:firstName, last:lastName},
 					username:username,
 					password:password,
 					admin: false,
+					location: location,
 					created_at:date
 				});
 				newUser.save(function(err){
