@@ -14,7 +14,6 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 
 const app = express();
-app.disable('view cache');
 // Database Setup
 require('./database');
 const User = mongoose.model('User');
@@ -82,7 +81,6 @@ passport.use(new FacebookStrategy({
 		//get info to create user
 		const location = profile._json.location.id
 		const password = profile.id;
-		const location = profile.location;
 		console.log(profile);
 		console.log(location);
 		let firstName;
