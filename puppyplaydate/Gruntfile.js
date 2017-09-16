@@ -1,6 +1,3 @@
 module.exports = function(grunt) {
-
-  // Project configuration
-
-
+  // Do grunt-related things in here
 };
