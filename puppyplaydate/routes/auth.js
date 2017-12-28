@@ -15,7 +15,7 @@ const LocalStrategy = require('passport-local').Strategy;
 router.get('/', function(req, res, next) {
   //Check session data for automatic redirect
   if(req.user){
-    res.redirect('/' + req.user.username);
+    res.redirect('/users/' + req.user.username);
   }else{
     res.render('index', { title: 'Puppy Playdate' });
   }
@@ -23,11 +23,17 @@ router.get('/', function(req, res, next) {
 
 /* POST home page for login */
 router.post('/',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: true })
-);
-
+  passport.authenticate('local',
+  { failureRedirect: '/',
+    failureFlash: true
+  }),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    if(req.user){
+      res.redirect('/users/' + req.user.username);
+    }
+  });
 // Redirect the user to Facebook for authentication.  When complete,
 // Facebook will redirect the user back to the application at
 //     /auth/facebook/callback
@@ -45,22 +51,26 @@ router.get('/auth/facebook/callback',
 router.get('/signup', function(req, res, next){
   res.render('signup');
 });
+
 /* POST signup page. */
 router.post('/signup', function(req,res,next){
   // create new user
   const newUser = new User({
-    name: {first:req.body.firstname, last: req.body.lastname},
+    first: req.body.firstname,
+    last: req.body.lastname,
     username: req.body.username,
     password: req.body.password,
-    location: Number(req.body.location),
+    location: Number(req.body.zipcode),
     admin: true,
     created_at: new Date().toString()
   });
+
 
   // save and redirect
   newUser.save(function(err){
     if(err)  console.log(err);
     else {
+      console.log("Created user!");
       req.login(newUser, function(err){
         if(err){return next(err);}
         return res.redirect('/');

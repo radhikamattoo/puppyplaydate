@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyDEveioqvDh55H1_lOP44u58uHputstsRs'
 });
+
 // Dog schema
 const Dog = new Schema({
   name: String,
@@ -13,7 +14,8 @@ const Dog = new Schema({
 
 // User schema
 const User = new Schema({
-  name: {first:String, last:String},
+  first: { type: String, required: true}, //first name 
+  last: { type: String, required: true}, //last name
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   admin: Boolean,

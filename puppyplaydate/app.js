@@ -9,17 +9,25 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-
 const mongoose = require('mongoose');
 const session = require('express-session');
 
-const app = express();
-// Database Setup
+// DATABASE
 require('./database');
 const User = mongoose.model('User');
 const Dog = mongoose.model('Dog');
 
-// view engine setup
+const auth = require('./routes/auth');
+const users = require('./routes/users');
+
+const app = express();
+
+// TODO: SET TO PRODUCTION WHEN DEPLOYED
+console.log(app.get('env'));
+// app.set('env', 'production');
+
+
+// VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.set('view options', { layout: 'layout' });
@@ -30,6 +38,7 @@ const sessionOptions = {
 		resave: false
 };
 
+// MIDDLEWARE
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -38,23 +47,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(sessionOptions));
 
-// Routing
-const routes = require('./routes/index');
-const users = require('./routes/users');
-
-//Authentication using Passport
+//AUTHENTICATION SETUP
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
-  console.log('handling request for: ' + req.url + "\n\n");
-  next();
-});
-
-//Set up strategies for user authentication:
-
-//regular username-password login
+// LOCAL
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function(err, user) {
@@ -70,7 +68,7 @@ passport.use(new LocalStrategy(
   }
 ));
 
-//Facebook login
+//FACEBOOK
 passport.use(new FacebookStrategy({
     clientID: 274235506408825,
     clientSecret: '761b127e8ec855dd8056c0c4f5894b13',
@@ -104,7 +102,8 @@ passport.use(new FacebookStrategy({
 			if(!user){
 				const date = new Date().toString();
 				const newUser = new User({
-					name: {first:firstName, last:lastName},
+					first: firstName,
+					last: lastName,
 					username:username,
 					password:password,
 					admin: false,
@@ -134,7 +133,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 //ROUTING
-app.use('/', routes);
+app.use('/', auth);
 app.use('/', users);
 
 // catch 404 and forward to error handler
