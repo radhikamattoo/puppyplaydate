@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
   if(req.user){
     res.redirect('/users/' + req.user.username);
   }else{
-    res.render('index', { title: 'Puppy Playdate' });
+    res.render('index', { title: 'Puppy Playdate', error: req.flash('error') });
   }
 });
 
