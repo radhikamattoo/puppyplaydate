@@ -7,10 +7,10 @@ const request  = require("supertest");
 const agent = request.agent(host)
 
 
-const credentials = {
-  username: 'Radhika-Mattoo',
-  password: '10213670864262036'
-}
+// const credentials = {
+//   username: 'Radhika-Mattoo',
+//   password: '10213670864262036'
+// }
 describe('Index Page', function() {
   it('should give back status 200', function(done){
   chai.request(host)

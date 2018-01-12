@@ -14,7 +14,7 @@ const Dog = new Schema({
 
 // User schema
 const User = new Schema({
-  first: { type: String, required: true}, //first name 
+  first: { type: String, required: true}, //first name
   last: { type: String, required: true}, //last name
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
