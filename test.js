@@ -5,7 +5,9 @@ chai.use(chaiHttp);
 const request  = require("supertest");
 const app = require('./app');
 
+const authenticatedUser = request.agent(app);
 require('dotenv').config();
+
 
 describe('Home Page', function() {
   it('Should give back status 200', function(done){
@@ -18,15 +20,15 @@ describe('Home Page', function() {
   });
 });
 
-describe('User Profile', function() {
-  it('Login should redirect to user page', function(done){
-    chai.request(app)
+describe('Authentication', function(){
+  it('Should login user and redirect to Profile', function(done){
+    authenticatedUser
     .post('/')
     .send({ username: process.env.username, password: process.env.password})
-    .then(function (res) {
-    // expect(res).to.have.cookie('sessionid');
-    expect(res).to.have.status(200);
-    done();
+    .end(function(err, response){
+      expect(response.statusCode).to.equal(302);
+      expect('Location', '/Radhika-Mattoo');
+      done();
     });
   });
 });
