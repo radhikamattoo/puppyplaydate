@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "./node_modules/.bin/mocha --compilers ts:typescript-require "
+    "test": "mocha --exit "
   },
   "dependencies": {
     "@google/maps": "^0.4.3",

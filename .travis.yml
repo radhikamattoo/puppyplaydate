@@ -5,3 +5,7 @@ services: mongodb
 cache:
   directories:
     - "node_modules"
+install:
+  npm install
+script:
+  npm test
