@@ -23,7 +23,7 @@ router.get('/users/:username',function(req, res, next) {
   const viewingUser = req.params.username;
   if(viewingUser == req.user.username){
     console.log("Viewing own profile");
-    res.render('profile', { user : req.user, owner : true });
+    res.render('profile', { user : req.user, friends: req.user.friends, location: req.user.location, owner : true });
   }else{
     console.log("Viewing someone else's profile");
     User.find({ username : viewingUser }, function(err, user){

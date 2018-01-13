@@ -1,5 +1,26 @@
+<a class="btn btn-primary-outline" href="/logout" role="button" id='logout'>Logout</a> <br>
 {{#if owner}}
   <h1> Viewing my own! </h1>
+  <div id='friends'>
+    <p> FRIENDS </p>
+    {{#each friends}}
+    <div id= {{this.username}}>
+      <p> Hello </p>
+    </div>
+    {{/each}}
+  </div>
+
+  <div id='dogs'>
+    <p> DOG </p>
+  </div>
+
+  <div id='chat'>
+    <p> CHAT </p>
+  </div>
+
+  <div id='map'>
+    <p> MAP </p>
+  </div>
 {{else}}
   <h1> Viewing someone else's! </h1>
 {{/if}}
