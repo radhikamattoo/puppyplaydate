@@ -5,7 +5,7 @@ chai.use(chaiHttp);
 const host = "http://localhost:3000";
 const request  = require("supertest");
 const agent = request.agent(host)
-
+const app = require('./app');
 
 // const credentials = {
 //   username: 'Radhika-Mattoo',
@@ -13,7 +13,7 @@ const agent = request.agent(host)
 // }
 describe('Index Page', function() {
   it('should give back status 200', function(done){
-  chai.request(host)
+  chai.request(app)
     .get('/')
     .end((err, res) => {
       expect(res).to.have.status(200);
