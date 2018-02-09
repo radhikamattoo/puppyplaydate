@@ -1,7 +1,7 @@
 
 body{
   text-align:center;
-  background-color: white;
+  background-color: #e6e6e6;
   color: orange;
   height: 100%;
 }
@@ -80,5 +80,4 @@ table, th, td {
 
 .error{
   text-color: red;
-  text-decoration: underline;
 }
