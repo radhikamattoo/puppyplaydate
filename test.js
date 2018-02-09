@@ -25,8 +25,8 @@ describe('Authentication', function(){
     authenticatedUser
     .post('/')
     .send({ username: process.env.username, password: process.env.password})
-    .end(function(err, response){
-      expect(response.statusCode).to.equal(302);
+    .end(function(err, res){
+      expect(res).to.redirect;
       expect('Location', '/Radhika-Mattoo');
       done();
     });

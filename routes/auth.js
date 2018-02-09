@@ -10,6 +10,8 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,10 +25,7 @@ router.get('/', function(req, res, next) {
 
 /* POST home page for login */
 router.post('/',
-  passport.authenticate('local',
-  { failureRedirect: '/',
-    failureFlash: true
-  }),
+  passport.authenticate('local', { failureRedirect: '/', failureFlash: true}),
   function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
@@ -55,29 +54,38 @@ router.get('/signup', function(req, res, next){
 
 /* POST signup page. */
 router.post('/signup', function(req,res,next){
-  // create new user
-  const newUser = new User({
-    first: req.body.firstname,
-    last: req.body.lastname,
-    username: req.body.username,
-    password: req.body.password,
-    location: Number(req.body.zipcode),
-    admin: true,
-    created_at: new Date().toString()
-  });
+
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(req.body.password, salt, function(err, hash) {
+        // create new user
+        const newUser = new User({
+          first: req.body.firstname,
+          last: req.body.lastname,
+          username: req.body.username,
+          password: hash,
+          salt: salt,
+          location: Number(req.body.zipcode),
+          admin: true,
+          created_at: new Date().toString()
+        });
+
+        // save and redirect
+        newUser.save(function(err){
+          if(err)  console.log(err);
+          else {
+            console.log("Created user!");
+            req.login(newUser, function(err){
+              if(err){return next(err);}
+              return res.redirect('/');
+            });
+          }
+        });
+
+    });
+});
 
 
-  // save and redirect
-  newUser.save(function(err){
-    if(err)  console.log(err);
-    else {
-      console.log("Created user!");
-      req.login(newUser, function(err){
-        if(err){return next(err);}
-        return res.redirect('/');
-      });
-    }
-  });
+
 });
 
 

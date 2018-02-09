@@ -11,6 +11,10 @@ const GoogleStrategy = require('passport-google-oauth').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const session = require('express-session');
+const rn = require('random-number');
+const rnGen = rn.generator({integer: true});
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 // DATABASE
 require('./database');
@@ -23,7 +27,7 @@ const users = require('./routes/users');
 const app = express();
 
 // TODO: SET TO PRODUCTION WHEN DEPLOYED
-console.log(app.get('env'));
+console.log("\nApp is in " + app.get('env').toUpperCase() + " mode\n");
 // app.set('env', 'production');
 
 
@@ -58,10 +62,7 @@ passport.use(new LocalStrategy({
 },function(req, username, password, done) {
     User.findOne({ username: username }, function(err, user) {
       if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, req.flash('error', 'Invalid username and/or password'));
-      }
-      if (user.password !== password) {
+      if (!user || user.password !== password) {
         return done(null, false, req.flash('error', 'Invalid username and/or password'));
       }
       return done(null, user);
@@ -80,8 +81,6 @@ passport.use(new FacebookStrategy({
 		//get info to create user
 		const location = profile._json.location.id
 		const password = profile.id;
-		console.log(profile);
-		console.log(location);
 		let firstName;
 		let lastName;
 		let username;
@@ -95,30 +94,35 @@ passport.use(new FacebookStrategy({
 			lastName = fullname.split(" ")[1];
 		}
 		if(!profile.username){
-			username = firstName + "-" + lastName;
+			username = firstName + lastName + rnGen();
 		}else{
 			username = profile.username;
 		}
-    User.findOne({username:username, password:password}, function(err, user,created){
-			if(!user){
-				const date = new Date().toString();
-				const newUser = new User({
-					first: firstName,
-					last: lastName,
-					username:username,
-					password:password,
-					admin: false,
-					location: location,
-					created_at:date
-				});
-				newUser.save(function(err){
-					if(err) return done(err);
-					else return done(null, newUser);
-				});
-			}else{
-				return done(null, user);
-			}
-		});
+		bcrypt.genSalt(saltRounds, function(err, salt) {
+			bcrypt.hash(password, salt, function(err, hash) {
+				User.findOne({username:username, password:hash}, function(err, user,created){
+					if(!user){
+						const date = new Date().toString();
+						const newUser = new User({
+							first: firstName,
+							last: lastName,
+							username:username,
+							password:hash,
+							salt: salt,
+							admin: false,
+							location: location,
+							created_at:date
+						});
+						newUser.save(function(err){
+							if(err) return done(err);
+							else return done(null, newUser);
+						});
+					}else{
+						return done(null, user);
+					}
+				}); //end findOne
+			}); //hash
+		}); //genSalt
   }
 ));
 // passport.use(new GoogleStrategy({}));

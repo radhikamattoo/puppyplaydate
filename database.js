@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const fs = require('fs');
 const googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyDEveioqvDh55H1_lOP44u58uHputstsRs'
+  key: fs.readFileSync('config.json').GoogleKey
 });
 
 // Dog schema
@@ -18,6 +19,7 @@ const User = new Schema({
   last: { type: String, required: true}, //last name
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  salt: { type: String, required: true},
   admin: Boolean,
   location: Number, //zip code
   created_at: Date,
