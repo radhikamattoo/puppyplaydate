@@ -1,11 +1,9 @@
-<a class="btn btn-primary-outline" href="/logout" role="button" id='logout'>Logout</a> <br>
-{{#if owner}}
-  <h1> Viewing my own! </h1>
+<a class="btn btn-primary-outline" href="/logout" role="button" id='logoutBtn'>Logout</a> <br>
 
   <div id='friends' class="col-xs-4 col-sm-3 hidden-lg hidden-md hidden-xs">
     <p> FRIENDS </p>
     {{#each friends}}
-    <div id= {{this.username}}>
+    <div id= 'friend'>
       <p> Hello </p>
     </div>
     {{/each}}
@@ -13,17 +11,40 @@
 
   <div id='chat'class="col-xs-4 col-sm-3 hidden-lg hidden-md hidden-xs">
     <p> CHAT </p>
+    {{#each online}}
+      <div id='online'>
+      </div>
+    {{/each}}
   </div><br>
 
-  <div id='dogs'>
-    <p> DOG </p>
-  </div>
+  {{#if owner}}
+  <!-- ALLOW EDITING OF PROFILE DATA -->
+    <h1> Viewing my own! </h1>
+    <p> Name: {{user.username}} </p>
+    <p> Location: {{user.location}} </p>
+    <p> Member since: {{user.created_at}} </p>
+    <h1> <a class="btn btn-primary" href="/users/{{user.username}}/edit" role="button" id='editUserBtn'> Edit User Profile</a> </h1>
 
+    <div id='dogs'>
+      <p> DOG </p>
+      {{#each images}}
+        <div id='dogImage'>
+          <!-- ENTER IMAGE HERE -->
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <h1> Viewing someone else's! </h1>
+    <div id='dogs'>
+      <p> DOG </p>
+      {{#each images}}
+        <div id='dogImage'>
+          <!-- ENTER IMAGE HERE -->
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
 
   <div id='map'>
     <p> MAP </p>
   </div>
-
-{{else}}
-  <h1> Viewing someone else's! </h1>
-{{/if}}

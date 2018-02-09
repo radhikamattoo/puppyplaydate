@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST home page for login */
-router.post('/',
+router.post('/login',
   passport.authenticate('local', { failureRedirect: '/', failureFlash: true}),
   function(req, res) {
     // If this function gets called, authentication was successful.
@@ -54,9 +54,10 @@ router.get('/signup', function(req, res, next){
 
 /* POST signup page. */
 router.post('/signup', function(req,res,next){
-
-  bcrypt.genSalt(process.env.saltRounds, function(err, salt) {
-    bcrypt.hash(req.body.password, salt, function(err, hash) {
+  const saltRounds = Number(process.env.saltRounds);
+  const password = req.body.password;
+  bcrypt.genSalt(saltRounds, (err, salt) => {
+    bcrypt.hash(password, salt, (err, hash) => {
       // create new user
       const newUser = new User({
         first: req.body.firstname,
@@ -70,11 +71,12 @@ router.post('/signup', function(req,res,next){
       });
       // save and redirect
       newUser.save(function(err){
-        if(err)  console.log(err);
+        if(err) {
+          res.render('error', {error: err});
+        }
         else {
-          console.log("Created user!");
           req.login(newUser, function(err){
-            if(err){return next(err);}
+            if(err){res.render('error', {error: err});}
             return res.redirect('/');
           });
         }

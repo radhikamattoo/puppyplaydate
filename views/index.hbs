@@ -1,11 +1,11 @@
 <div>
   <a class="btn btn-primary-outline" href="/auth/facebook" role="button">Facebook Login/Signup</a> <br>
-  <a class="btn btn-primary-outline" role="button" href = "/signup">Signup </a> <br> <br>
+  <a class="btn btn-primary-outline" role="button" href = "/signup" id="signUpBtn">Signup </a> <br> <br>
   {{#if error}}
   <h3 style="color:red;"> {{error}} </h3>
   {{/if}}
   <h4> LOGIN: </h4>
-    <form method="POST" action="" id='login'>
+    <form method="POST" action="/login" id='login'>
     Username: <input type="text" name="username" id='username'> <br><br>
     Password: <input type="password" name="password" id='password'> <br> <br>
     <button class="btn btn-primary" type="submit" value="Log In" id='logInBtn'>Login</button<br> <br>

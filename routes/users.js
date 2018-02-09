@@ -33,7 +33,15 @@ router.get('/users/:username',function(req, res, next) {
   }
 });
 
+/*GET on user edit page*/
+router.get('/users/:username/edit', function(req, res, next){
 
+});
+
+/*POST on user edit page*/
+router.post('/users/:username/edit', function(req, res, next){
+
+});
 /* GET user chat general page */
 router.get('/chat',function(req, res, next) {
   //check req.param for users who are chatting
