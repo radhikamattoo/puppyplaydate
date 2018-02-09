@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const googleMapsClient = require('@google/maps').createClient({
-  key: process.env.GoogleKey;
+  key: process.env.GoogleKey
 });
 
 // Dog schema
