@@ -1,15 +1,47 @@
+
 body{
   text-align:center;
   background-color: white;
   color: orange;
+  height: 100%;
 }
 #home {
   font-size: 100%
 }
-/* img{
-  max-height: 300px;
-  max-width: 300px;
-} */
+#friends{
+  top:20px;
+  height:100vh;
+  width:205px;
+  position:absolute;
+  left: 0px;
+  display: inline-block;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: orange;
+}
+
+#dogs {
+  text-align: center;
+}
+
+#chat {
+  top:20px;
+  height:100vh;
+  width:205px;
+  position:absolute;
+  right: 0px;
+  display: inline-block;
+  box-sizing: border-box;
+  border-left-width: 1px;
+  border-left-style: solid;
+  border-left-color: orange;
+  min-width: 205px;
+}
+
+#map {
+  text-align: bottom;
+}
+
 a {
     color: blue;
     background-color: transparent;

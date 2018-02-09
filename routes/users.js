@@ -33,15 +33,17 @@ router.get('/users/:username',function(req, res, next) {
   }
 });
 
-/* POST on user (EDIT) */
-router.post('/users/:username',function(req, res, next) {
-  // res.render('home', {user:req.user});
-});
 
 /* GET user chat general page */
 router.get('/chat',function(req, res, next) {
   //check req.param for users who are chatting
   res.render('chat', {user:req.user});
+});
+
+/* GET user chat general page */
+router.get('/map',function(req, res, next) {
+  //check req.param for users who are chatting
+  res.render('map', {user:req.user});
 });
 
 

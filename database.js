@@ -9,7 +9,8 @@ const Dog = new Schema({
   name: String,
   age: Number,
   breed: String,
-  description: String
+  description: String,
+  images: [{ data: Buffer, contentType: String}]
 });
 
 // User schema

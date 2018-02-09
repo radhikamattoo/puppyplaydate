@@ -1,7 +1,8 @@
 <a class="btn btn-primary-outline" href="/logout" role="button" id='logout'>Logout</a> <br>
 {{#if owner}}
   <h1> Viewing my own! </h1>
-  <div id='friends'>
+
+  <div id='friends' class="col-xs-4 col-sm-3 hidden-lg hidden-md hidden-xs">
     <p> FRIENDS </p>
     {{#each friends}}
     <div id= {{this.username}}>
@@ -10,17 +11,19 @@
     {{/each}}
   </div>
 
+  <div id='chat'class="col-xs-4 col-sm-3 hidden-lg hidden-md hidden-xs">
+    <p> CHAT </p>
+  </div><br>
+
   <div id='dogs'>
     <p> DOG </p>
   </div>
 
-  <div id='chat'>
-    <p> CHAT </p>
-  </div>
 
   <div id='map'>
     <p> MAP </p>
   </div>
+
 {{else}}
   <h1> Viewing someone else's! </h1>
 {{/if}}
