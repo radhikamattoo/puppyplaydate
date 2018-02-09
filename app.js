@@ -62,10 +62,11 @@ passport.use(new LocalStrategy({
 },function(req, username, password, done) {
     User.findOne({ username: username }, function(err, user) {
       if (err) { return done(err); }
-      if (!user || user.password !== password) {
-        return done(null, false, req.flash('error', 'Invalid username and/or password'));
-      }
-      return done(null, user);
+			if(!user) return done(null, false, req.flash('error', 'Invalid username and/or password'));
+			bcrypt.compare(password, user.password, (err,res) => {
+				if(err) return done(null, false, req.flash('error', 'Invalid username and/or password'));
+				return done(null, user);
+			});
     });
   }
 ));
@@ -75,17 +76,18 @@ passport.use(new FacebookStrategy({
     clientID: process.env.fbClientId,
     clientSecret: process.env.fbClientSecret,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
-		profileFields: ['id', 'displayName', 'location']
+		profileFields: ['id', 'displayName', 'location', 'email']
   },
   function(accessToken, refreshToken, profile, done) {
 		//get info to create user
-		const location = profile._json.location.id
+		const location = profile._json.location.id;
 		const password = profile.id;
+		const email = profile._json.email;
+		console.log("EMAIL IS: ", profile);
 		let firstName;
 		let lastName;
-		let username;
 
-		if(profile.name.givenName){
+		if(profile.name.givenName && profile.name.familyName){
 			firstName = profile.name.givenName;
 			lastName = profile.name.familyName;
 		}else{
@@ -93,22 +95,21 @@ passport.use(new FacebookStrategy({
 			firstName = fullname.split(" ")[0];
 			lastName = fullname.split(" ")[1];
 		}
-		if(!profile.username){
-			username = firstName + lastName + rnGen();
-		}else{
-			username = profile.username;
-		}
-		bcrypt.genSalt(process.env.saltRounds, function(err, salt) {
-			bcrypt.hash(password, salt, function(err, hash) {
-				User.findOne({ username : username, password : hash }, function(err, user,created){
-					if(!user){
-						const date = new Date().toString();
+		const username = firstName + lastName + location;
+
+		User.findOne({email: email}, function(err, user){
+			if(!user){ //create new user
+				bcrypt.genSalt(Number(process.env.saltRounds), (err, salt) => {
+					bcrypt.hash(password, salt, (err, hash) => {
+
+						let date = new Date().toString();
 						const newUser = new User({
 							first: firstName,
 							last: lastName,
 							username:username,
 							password:hash,
 							salt: salt,
+							email: email,
 							admin: false,
 							location: location,
 							created_at:date
@@ -117,12 +118,16 @@ passport.use(new FacebookStrategy({
 							if(err) return done(err);
 							else return done(null, newUser);
 						});
-					}else{
-						return done(null, user);
-					}
-				}); //end findOne
-			}); //hash
-		}); //genSalt
+
+					}); //hash
+				}); //genSalt
+			}else{ //login!
+				bcrypt.compare(password, user.password, (err,res) => {
+					if(err) return done(null, false, req.flash('error', 'Invalid username and/or password'));
+					return done(null, user);
+				});
+			}
+		}); //user findone
   }
 ));
 // passport.use(new GoogleStrategy({}));

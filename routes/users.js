@@ -28,14 +28,14 @@ router.get('/users/:username',function(req, res, next) {
     console.log("Viewing someone else's profile");
     User.find({ username : viewingUser }, function(err, user){
       res.render('profile', { user : user, owner : false });
-
+[]
     });
   }
 });
 
 /*GET on user edit page*/
 router.get('/users/:username/edit', function(req, res, next){
-
+  
 });
 
 /*POST on user edit page*/

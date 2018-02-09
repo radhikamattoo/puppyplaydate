@@ -1,18 +1,22 @@
 
 body{
   text-align:center;
-  background-color: #e6e6e6;
-  color: orange;
+  background-color: #FFFBD9;
+  color: #CC6600;
   height: 100%;
+}
+.btn.btn-warning{
+  color: #C13100;
 }
 #home {
   font-size: 100%
 }
+
 #friends{
   top:20px;
-  height:100vh;
+  height:97vh;
   width:205px;
-  position:absolute;
+  position:fixed;
   left: 0px;
   display: inline-block;
   border-right-width: 1px;
@@ -26,9 +30,9 @@ body{
 
 #chat {
   top:20px;
-  height:100vh;
+  height:97vh;
   width:205px;
-  position:absolute;
+  position:fixed;
   right: 0px;
   display: inline-block;
   box-sizing: border-box;
@@ -41,7 +45,10 @@ body{
 #map {
   text-align: bottom;
 }
-
+#login{
+  margin: 0 auto;
+  float: none;
+}
 a {
     color: blue;
     background-color: transparent;

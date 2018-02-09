@@ -63,6 +63,7 @@ router.post('/signup', function(req,res,next){
         first: req.body.firstname,
         last: req.body.lastname,
         username: req.body.username,
+        email: req.body.email,
         password: hash,
         salt: salt,
         location: Number(req.body.zipcode),
