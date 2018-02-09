@@ -12,6 +12,9 @@ body{
   font-size: 100%
 }
 
+h1,h2,h3,h4,h5,h6{
+  color: #FF9900;
+}
 #friends{
   top:20px;
   height:97vh;
@@ -45,7 +48,11 @@ body{
 #map {
   text-align: bottom;
 }
-#login{
+#login {
+  margin: 0 auto;
+  float: none;
+}
+#signup {
   margin: 0 auto;
   float: none;
 }

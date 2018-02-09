@@ -83,7 +83,6 @@ passport.use(new FacebookStrategy({
 		const location = profile._json.location.id;
 		const password = profile.id;
 		const email = profile._json.email;
-		console.log("EMAIL IS: ", profile);
 		let firstName;
 		let lastName;
 

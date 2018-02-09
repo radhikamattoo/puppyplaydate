@@ -1,11 +1,8 @@
 <div>
-  <h5> Welcome </h5>
-  <p>  Connect with fellow dog enthusiasts <br>
-    and help us create a community of dog owners! </p>
-  <a class="btn btn-warning" href="/auth/facebook" role="button"> Facebook Login/Signup</a> <br><br>
-  <a class="btn btn-warning" role="button" href = "/signup" id="signUpBtn">Signup </a> <br> <br>
-
-  <p> If you've already created an account, login below: </p> 
+  <h6>  Connect with fellow dog enthusiasts <br>
+    and help us create a community of dog owners! </h6> <br><br>
+  <!-- <a class="btn btn-warning" href="/auth/facebook" role="button"> Facebook Login/Signup</a> <br><br> -->
+  <p> If you've already created an account, login below: </p>
   {{#if error}}
   <h6 style="color:red;"> {{error}} </h6>
   {{/if}}
@@ -21,5 +18,11 @@
       </div>
       <button class="btn btn-warning" type="submit" value="Log In" id='logInBtn'> Login</button<br> <br>
   </form>
+</div> <br> <br>
+
+<div>
+  <p> If you don't have an account yet, let's sign you up! </p>
+  <a class="btn btn-warning" role="button" href = "/signup" id="signUpBtn">Create Account </a> <br> <br>
 </div>
+
 </div>
