@@ -14,7 +14,7 @@ const session = require('express-session');
 const rn = require('random-number');
 const rnGen = rn.generator({integer: true});
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+require('dotenv').config();
 
 // DATABASE
 require('./database');
@@ -27,8 +27,8 @@ const users = require('./routes/users');
 const app = express();
 
 // TODO: SET TO PRODUCTION WHEN DEPLOYED
-console.log("\nApp is in " + app.get('env').toUpperCase() + " mode\n");
 // app.set('env', 'production');
+console.log("\nApp is in " + app.get('env').toUpperCase() + " mode\n");
 
 
 // VIEW ENGINE
@@ -72,8 +72,8 @@ passport.use(new LocalStrategy({
 
 //FACEBOOK
 passport.use(new FacebookStrategy({
-    clientID: 274235506408825,
-    clientSecret: '761b127e8ec855dd8056c0c4f5894b13',
+    clientID: process.env.fbClientId,
+    clientSecret: process.env.fbClientSecret,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
 		profileFields: ['id', 'displayName', 'location']
   },
@@ -98,9 +98,9 @@ passport.use(new FacebookStrategy({
 		}else{
 			username = profile.username;
 		}
-		bcrypt.genSalt(saltRounds, function(err, salt) {
+		bcrypt.genSalt(process.env.saltRounds, function(err, salt) {
 			bcrypt.hash(password, salt, function(err, hash) {
-				User.findOne({username:username, password:hash}, function(err, user,created){
+				User.findOne({ username : username, password : hash }, function(err, user,created){
 					if(!user){
 						const date = new Date().toString();
 						const newUser = new User({

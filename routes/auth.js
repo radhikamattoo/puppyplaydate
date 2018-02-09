@@ -11,7 +11,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+require('dotenv').config();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -55,36 +55,32 @@ router.get('/signup', function(req, res, next){
 /* POST signup page. */
 router.post('/signup', function(req,res,next){
 
-  bcrypt.genSalt(saltRounds, function(err, salt) {
+  bcrypt.genSalt(process.env.saltRounds, function(err, salt) {
     bcrypt.hash(req.body.password, salt, function(err, hash) {
-        // create new user
-        const newUser = new User({
-          first: req.body.firstname,
-          last: req.body.lastname,
-          username: req.body.username,
-          password: hash,
-          salt: salt,
-          location: Number(req.body.zipcode),
-          admin: true,
-          created_at: new Date().toString()
-        });
-
-        // save and redirect
-        newUser.save(function(err){
-          if(err)  console.log(err);
-          else {
-            console.log("Created user!");
-            req.login(newUser, function(err){
-              if(err){return next(err);}
-              return res.redirect('/');
-            });
-          }
-        });
-
-    });
-});
-
-
+      // create new user
+      const newUser = new User({
+        first: req.body.firstname,
+        last: req.body.lastname,
+        username: req.body.username,
+        password: hash,
+        salt: salt,
+        location: Number(req.body.zipcode),
+        admin: true,
+        created_at: new Date().toString()
+      });
+      // save and redirect
+      newUser.save(function(err){
+        if(err)  console.log(err);
+        else {
+          console.log("Created user!");
+          req.login(newUser, function(err){
+            if(err){return next(err);}
+            return res.redirect('/');
+          });
+        }
+      }); //save
+    }); //hash
+  }); //salt
 
 });
 

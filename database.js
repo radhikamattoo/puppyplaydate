@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const fs = require('fs');
 const googleMapsClient = require('@google/maps').createClient({
-  key: fs.readFileSync('config.json').GoogleKey
+  key: process.env.GoogleKey;
 });
 
 // Dog schema
@@ -30,4 +29,5 @@ const User = new Schema({
 mongoose.model('Dog', Dog);
 mongoose.model('User', User);
 
+// TODO: CHANGE TO PRODUCTION SERVER WHEN DEPLOYED
 mongoose.connect('mongodb://localhost/puppyplaydate');
