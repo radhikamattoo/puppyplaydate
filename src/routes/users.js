@@ -21,7 +21,7 @@ router.use(function(req, res, next) {
 /* GET user profile page */
 router.get('/users/:username',function(req, res, next) {
   const viewingUser = req.params.username;
-  if(viewingUser == req.user.username){
+  if(viewingUser === req.user.username){
     console.log("Viewing own profile");
     res.render('profile', { user : req.user, friends: req.user.friends, location: req.user.location, owner : true });
   }else{
@@ -35,7 +35,12 @@ router.get('/users/:username',function(req, res, next) {
 
 /*GET on user edit page*/
 router.get('/users/:username/edit', function(req, res, next){
-  
+  if(req.params.username === req.user.username){
+    res.render('editUser', { user: req.params.username});
+  }else{
+    const redirectUrl = '/users/' + req.user.username + '/edit';
+    res.redirect(redirectUrl);
+  }
 });
 
 /*POST on user edit page*/

@@ -17,7 +17,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 // DATABASE
-require('./database');
+require('./db');
 const User = mongoose.model('User');
 const Dog = mongoose.model('Dog');
 
