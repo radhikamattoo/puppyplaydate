@@ -1,4 +1,5 @@
 # Puppy Playdate
+## PLEASE NOTE: This project is still a WIP
 
 [![Build Status](https://travis-ci.org/radhikamattoo/puppyplaydate.svg?branch=master)](https://travis-ci.org/radhikamattoo/puppyplaydate)
 
