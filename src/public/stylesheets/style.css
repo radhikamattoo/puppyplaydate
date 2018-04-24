@@ -1,13 +1,17 @@
 
 body{
-  text-align:center;
-  background-color: #FFFBD9;
-  color: #CC6600;
-  height: 100%;
+  text-align:center !important;
+  background-color: #FFFBD9 !important;
+  color: #CC6600 !important;
+}
+
+.col-md-4{
+  margin: auto;
 }
 .btn.btn-warning{
   color: #C13100;
 }
+
 #home {
   font-size: 100%
 }
@@ -15,39 +19,36 @@ body{
 h1,h2,h3,h4,h5,h6{
   color: #FF9900;
 }
-#friends{
+/* #friends{
+  height:100%;
   top:20px;
-  height:97vh;
-  width:205px;
-  position:fixed;
   left: 0px;
-  display: inline-block;
   border-right-width: 1px;
   border-right-style: solid;
   border-right-color: orange;
-}
+} */
 
-#dogs {
+ #dogs {
   text-align: center;
 }
 
-#chat {
+.dogInfo{
+  list-style-type: none;
+}
+
+/* #chat {
   top:20px;
-  height:97vh;
-  width:205px;
-  position:fixed;
+  height:100%;
   right: 0px;
-  display: inline-block;
   box-sizing: border-box;
   border-left-width: 1px;
   border-left-style: solid;
   border-left-color: orange;
-  min-width: 205px;
 }
 
 #map {
   text-align: bottom;
-}
+} */
 #login {
   margin: 0 auto;
   float: none;

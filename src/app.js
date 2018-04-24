@@ -23,6 +23,7 @@ const Dog = mongoose.model('Dog');
 
 const auth = require('./routes/auth');
 const users = require('./routes/users');
+const chat = require('./routes/chat');
 
 const app = express();
 
@@ -39,7 +40,11 @@ app.set('view options', { layout: 'layout' });
 const sessionOptions = {
 		secret: 'secret thang',
 		saveUninitialized: false,
-		resave: false
+		resave: false,
+		cookie: {
+			secure: false,
+			maxAge: Number(process.env.maxAge)
+		}
 };
 
 // MIDDLEWARE
@@ -144,6 +149,7 @@ passport.deserializeUser(function(id, done) {
 //ROUTING
 app.use('/', auth);
 app.use('/', users);
+app.use('/', chat);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

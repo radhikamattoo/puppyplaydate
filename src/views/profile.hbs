@@ -1,48 +1,56 @@
 <a class="btn btn-danger" href="/logout" role="button" id='logout'>Logout</a> <br>
-
-  <div id='friends' class="col-xs-4 col-sm-3 hidden-lg hidden-md hidden-xs">
-    <h5> PupFriends </h5>
-    {{#each friends}}
-    <div id= 'friend'>
-      <p> Hello </p>
-    </div>
-    {{/each}}
-  </div>
-
-  <div id='chat'class="col-xs-4 col-sm-3 hidden-lg hidden-md hidden-xs">
-    <h5> Chat </h5>
-    {{#each online}}
-      <div id='online'>
+  <div class="row">
+    <div id='friends' class='col-md-4'>
+      <h5> PupFriends </h5>
+      {{#each friends}}
+      <div id= 'friend'>
+        <p> Hello </p>
       </div>
-    {{/each}}
-  </div><br>
+      {{/each}}
+    </div>
 
-  {{#if owner}}
-  <!-- ALLOW EDITING OF PROFILE DATA -->
-    <p> Name: {{user.first}} {{user.last}} </p>
-    <p> Location: {{user.location}} </p>
-    <p> Member since: {{user.created_at}} </p>
-    <h1> <a class="btn btn-warning" href="/users/{{user.username}}/edit" role="button" id='editUserBtn'> Edit User Profile</a> </h1>
 
-    <div id='dogs'>
-      <h5> Dogs </h5>
-      {{#each images}}
-        <div id='dogImage'>
-          <!-- ENTER IMAGE HERE -->
+    <div id="profile" class='col-md-4'>
+      <!-- {{#if owner}} -->
+      <!-- ALLOW EDITING OF PROFILE DATA -->
+        <p> Name: {{user.first}} {{user.last}} </p>
+        <p> Location: {{user.location}} </p>
+        <p> Member since: {{user.created_at}} </p>
+        <h1> <a class="btn btn-warning" href="/users/{{user.username}}/edit" role="button" id='editUserBtn'> Edit User Profile</a> </h1>
+
+        <!-- <div id='dogs'>
+          <h5> Dogs </h5>
+          {{#each dogs}}
+            <ul class="dogInfo">
+              <li>Name: {{this.name}} </li>
+              <li>Age: {{this.age}} </li>
+              <li>Breed: {{this.breed}} </li>
+              <li>Description: {{this.description}} </li>
+            </ul>
+          {{/each}}
+        </div>
+      {{else}}
+        <div id='dogs'>
+          <h5> Dogs </h5>
+          {{#each dogs}}
+          <ul class="dogInfo">
+            <li>Name: {{this.name}} </li>
+            <li>Age: {{this.age}} </li>
+            <li>Breed: {{this.breed}} </li>
+            <li>Description: {{this.description}} </li>
+          </ul>
+          {{/each}}
+        </div> -->
+      <!-- {{/if}} -->
+    </div>
+    <div id='chat' class='col-md-4'>
+      <h5> Chat </h5>
+      {{#each online}}
+        <div id='online'>
         </div>
       {{/each}}
     </div>
-  {{else}}
-    <div id='dogs'>
-      <h5> Dogs </h5>
-      {{#each images}}
-        <div id='dogImage'>
-          <!-- ENTER IMAGE HERE -->
-        </div>
-      {{/each}}
-    </div>
-  {{/if}}
-
+  </div><br><br>
   <div id='map'>
     <h5> Map </h5>
   </div>

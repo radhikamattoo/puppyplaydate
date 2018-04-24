@@ -4,6 +4,12 @@ const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GoogleKey
 });
 
+const Chat = new Schema({
+  user1: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  user2: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  text: [String]
+});
+
 // Dog schema
 const Dog = new Schema({
   name: String,
@@ -26,7 +32,8 @@ const User = new Schema({
   location: Number, //zip code
   created_at: Date,
   dogs: [Dog],
-  friends: [this]
+  friends: [this],
+  chats: [Chat]
 });
 
 mongoose.model('User', User);

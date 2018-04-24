@@ -1,0 +1,24 @@
+<form action="" method="POST" name="edit">
+  <p> Name: {{user.first}} {{user.last}} </p>
+  <p> Location: {{user.location}} </p>
+  <p> Member since: {{user.created_at}} </p>
+
+  <div id='dogs'>
+    <h5> Your Dogs </h5>
+    {{#each dog}}
+      <span>Name: {{this.name}} </span>
+      <span>Age: {{this.age}} </span>
+      <span>Breed: {{this.breed}} </span>
+      <span>Description: {{this.description}} </span>
+      <div id='dogImage'>
+        <!-- ENTER IMAGE HERE -->
+        <input type="file" name={{this._id}} />
+        <input type='submit' value='Upload!' />
+      </div>
+    {{/each}}
+  </div>
+  <!-- Add a new dog  -->
+  <!-- Delete a photo for a dog -->
+  <!-- Upload photo for dog -->
+</form>
+<h1> <a class="btn btn-warning" href="/users/{{user.username}}" role="button">Back</a> </h1>
