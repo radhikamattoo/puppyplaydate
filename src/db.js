@@ -7,7 +7,7 @@ const googleMapsClient = require('@google/maps').createClient({
 const Chat = new Schema({
   user1: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   user2: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  text: [String]
+  text: Object
 });
 
 // Dog schema
@@ -32,12 +32,13 @@ const User = new Schema({
   location: Number, //zip code
   created_at: Date,
   dogs: [Dog],
-  friends: [this],
+  friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   chats: [Chat]
 });
 
 mongoose.model('User', User);
 mongoose.model('Dog', Dog);
+mongoose.model('Chat', Chat);
 
 // TODO: CHANGE TO PRODUCTION SERVER WHEN DEPLOYED
 mongoose.connect('mongodb://localhost/puppyplaydate');

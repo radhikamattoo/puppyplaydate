@@ -14,10 +14,4 @@ router.get('/chat',function(req, res, next) {
   res.render('chat', {user:req.user});
 });
 
-/* GET user chat general page */
-router.get('/map',function(req, res, next) {
-  //check req.param for users who are chatting
-  res.render('map', {user:req.user});
-});
-
 module.exports = router;
