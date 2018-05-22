@@ -14,11 +14,12 @@
     </div>
 
 
-    <div id="profile" class='col-md-4'>
+    <div id="profile" class='col-md-4'> <br>
+      <p> Name: {{user.first}} {{user.last}} </p>
+      <p> Location: {{user.location}} </p>
       {{#if owner}}
       <!-- ALLOW EDITING OF PROFILE DATA -->
-        <p> Name: {{user.first}} {{user.last}} </p>
-        <p> Location: {{user.location}} </p>
+
         <!-- <p> Member since: {{user.created_at}} </p> -->
         <h1> <a class="btn btn-warning" href="/users/{{user.username}}/edit" role="button" id='editUserBtn'> Edit User Profile</a> </h1>
 
