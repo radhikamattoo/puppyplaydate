@@ -1,65 +1,57 @@
-<a class="btn btn-danger" href="/logout" role="button" id='logout'>Logout</a> <br>
-  <div class="row">
-    <div id='friends' class='col-md-4'>
-      <h5 > PupFriends </h5>
-      {{#each friends}}
-      <div id= 'friend'>
-        <a href="/users/{{this.username}}"><p> {{this.first}}  {{this.last}} </p></a>
+<a class="btn btn-danger" href="/logout" role="button" id='logout'>Logout</a> <br><br>
+<h4> {{user.first}} {{user.last}} </h4>
+<h1> <a class="btn btn-warning" href="/users/{{user.username}}/edit" role="button" id='editUserBtn'> Edit User Profile</a> </h1>
+  <div class="container">
+    <div class="row">
+      <div id='friends' class='col-md-4 shadow-sm rounded border'>
+        <h5 > PupFriends </h5>
+        {{#each friends}}
+        <div id= 'friend'>
+          <a href="/users/{{this.username}}"><p> {{this.first}}  {{this.last}} </p></a>
+        </div>
+        {{/each}}
+        {{#if owner}}
+        {{else}}
+        <br><a href="/users/{{user.username}}/add"> Add me as a friend! </a>
+        {{/if}}
       </div>
-      {{/each}}
-      {{#if owner}}
-      {{else}}
-      <br><a href="/users/{{user.username}}/add"> Add me as a friend! </a>
-      {{/if}}
-    </div>
-
-
-    <div id="profile" class='col-md-4'> <br>
-      <p> Name: {{user.first}} {{user.last}} </p>
-      <p> Location: {{user.location}} </p>
-      {{#if owner}}
-      <!-- ALLOW EDITING OF PROFILE DATA -->
-
-        <!-- <p> Member since: {{user.created_at}} </p> -->
-        <h1> <a class="btn btn-warning" href="/users/{{user.username}}/edit" role="button" id='editUserBtn'> Edit User Profile</a> </h1>
-
-        <br> <br>
-        <div id='dogs'>
-          <h5> Dogs </h5> <br>
-          {{#each dogs}}
-            <div class="dogInfo">
-              <h6> Name: </h6> <p> {{this.name}} </p>
-              <h6> Age: </h6> <p> {{this.age}} </p>
-              <h6> Breed: </h6> <p> {{this.breed}} </p>
-            </div>
-          {{/each}}
-        </div>
-      {{else}}
-        <div id='dogs'>
-          <h5> Dogs </h5> <br>
-          {{#each dogs}}
-            <div class="dogInfo">
-              <h6> Name: </h6> <p> {{this.name}} </p>
-              <h6> Age: </h6> <p> {{this.age}} </p>
-              <h6> Breed: </h6> <p> {{this.breed}} </p>
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-    </div>
-    <div id='chat' class='col-md-4'>
-      <h5> Meetups </h5>
-      {{#if owner}}
-      {{else}}
-      <a href="/users/{{user.username}}/meet"> Request to meet! </a>
-      {{/if}}
-      {{#each chats}}
-        <div class='chat'>
-          <p> {{this.text.location}} on {{this.text.date}} at {{this.text.time}}
-        </div>
-      {{/each}}
-    </div>
-  </div><br><br>
+        {{#if owner}}
+          <div id="profile" class='col-md-4'> <br>
+            <h5> Dogs </h5> <br>
+            {{#each dogs}}
+              <div class="dogInfo">
+                <h6> Name: </h6> <p> {{this.name}} </p>
+                <h6> Age: </h6> <p> {{this.age}} </p>
+                <h6> Breed: </h6> <p> {{this.breed}} </p>
+              </div>
+            {{/each}}
+          </div>
+        {{else}}
+          <div id="profile" class='col-md-4'> <br>
+            <h5> Dogs </h5> <br>
+            {{#each dogs}}
+              <div class="dogInfo">
+                <h6> Name: </h6> <p> {{this.name}} </p>
+                <h6> Age: </h6> <p> {{this.age}} </p>
+                <h6> Breed: </h6> <p> {{this.breed}} </p>
+              </div>
+            {{/each}}
+          </div>
+        {{/if}}
+      <div id='chat' class='col-md-4 shadow-lg rounded border'>
+        <h5> Chat </h5>
+        {{#if owner}}
+        {{else}}
+        <a href="/users/{{user.username}}/meet"> Request to meet! </a>
+        {{/if}}
+        {{#each chats}}
+          <div class='chat'>
+            <p> {{this.text.location}} on {{this.text.date}} at {{this.text.time}}
+          </div>
+        {{/each}}
+      </div>
+    </div><br><br>
+  </div>
   <!-- <div id='map'>
     <h5> Map </h5>
   </div> -->

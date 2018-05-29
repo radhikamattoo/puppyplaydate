@@ -1,44 +1,53 @@
-<form action="" method="POST" name="edit">
-  <p> Name: {{user.first}} {{user.last}} </p>
-  <p> Location: {{user.location}} </p>
-  <!-- <p> Member since: {{user.created_at}} </p> -->
-
-  <div id='dogs'>
-    <!-- <h5> Your Dogs </h5>
-    {{#each dog}}
-    <form action="" method="POST" name="edit">
-      <input type="text"> Name: {{this.name}} <br>
-      <input type="text">Age: {{this.age}} <br>
-      <input type="text">Breed: {{this.breed}} <br>
-      <input type="text">Description: {{this.description}} <br>
-      <div id='dogImage'>
-        ENTER IMAGE HERE
-        <input type="file" name={{this._id}} />
-        <button type='submit' value='Submit Changes' />
+  <div class='container'>
+    <div class='row'>
+      <div class="form" class="col-md-4">
+        <!--TODO: Edit existing dogs  -->
       </div>
-    </form>
-    {{/each}} -->
-    <h5> Add a new Dog </h5>
-    <div id="signup" class="col-lg-4 col-lg-offset-4">
-      <form action="" method="POST" name="addDog">
-        <div class="form-group">
-          <label for="name"> Name:</label>
-          <input type="text" name="name" class="form-control" id="name">
-        </div>
-        <div class="form-group">
-          <label for="age">Age:</label>
-          <input type="text"  class="form-control" name="age" id="age">
-        </div>
-        <div class="form-group">
-          <label for="breed">Breed:</label>
-          <input type="text" class="form-control" name="breed" id="breed">
-        </div>
-        <button class="btn btn-warning" type="submit" > Add New Dog </button> <br> <br>
-      </form>
+      <div class="form" class="col-md-4">
+        <h5> Add a new Dog </h5>
+        <form action="" +  method="POST">
+          <div class="form-group">
+            <label for="name"> Name:</label>
+            <input type="text" name="newName" class="form-control" id="name" required="true">
+          </div>
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="text"  class="form-control" name="newAge" id="age" required="true">
+          </div>
+          <div class="form-group">
+            <label for="breed">Breed:</label>
+            <input type="text" class="form-control" name="newBreed" id="breed" required="true">
+          </div>
+          <div class="form-group">
+            <label for="images" >Upload up to 3 pictures of your pup!</label><br>
+              <input type="file" class="form-control" name="newImages" id="images" required="true" style="width:40%; margin: 0 auto;" multiple>
+          </div><br><br>
+            <button class="btn btn-warning" type="submit">
+              Add New Dog
+            </button> <br> <br>
+        </form>
+      </div>
     </div>
-
   </div>
   <!-- Add a new dog  -->
   <!-- Delete a photo for a dog -->
   <!-- Upload photo for dog -->
 <h1> <a class="btn btn-warning" href="/users/{{user.username}}" role="button">Back</a> </h1>
+<script>
+   $(function(){
+      $("button[type = 'submit']").click(function(){
+         const $fileUpload = $("input[type='file']").get(0).files;
+         if (parseInt($fileUpload.length) > 3){
+            alert("You are only allowed to upload a maximum of 3 files");
+         }
+         const allowed = ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG'];
+         for(let file of $fileUpload){
+           console.log(file.name);
+           const extension = file.name.split('.')[1];
+           if(!allowed.includes(extension)){
+             alert("You are only allowed to upload a PNG or JPG image");
+           }
+         }
+      });
+   });
+</script>

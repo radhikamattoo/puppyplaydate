@@ -1,64 +1,31 @@
-
 body{
   text-align:center !important;
-  background-color: #FFFBD9 !important;
-  color: #CC6600 !important;
+  background-color: #01395e !important;
+  color: #ffffff !important;
 }
 
-.col-md-4{
-  margin: auto;
-}
 .btn.btn-warning{
-  color: #C13100;
-}
-
-#home {
-  font-size: 100%
+  color: #01395e;
+  background-color: #ffaf00;
 }
 
 h1,h2,h3,h4,h5,h6{
-  color: #FF9900;
-}
-/* #friends{
-  height:100%;
-  top:20px;
-  left: 0px;
-  border-right-width: 1px;
-  border-right-style: solid;
-  border-right-color: orange;
-} */
-
- #dogs {
-  text-align: center;
+  color: #ffaf00;
 }
 
 .dogInfo{
   list-style-type: none;
 }
 
-/* #chat {
-  top:20px;
-  height:100%;
-  right: 0px;
-  box-sizing: border-box;
-  border-left-width: 1px;
-  border-left-style: solid;
-  border-left-color: orange;
+.form{
+  margin: 0 auto;
+  float: none;
+  color: #ffaf00;
+  width: 75%;
 }
 
-#map {
-  text-align: bottom;
-} */
-#login {
-  margin: 0 auto;
-  float: none;
-}
-#signup {
-  margin: 0 auto;
-  float: none;
-}
 a {
-    color: blue;
+    color: white;
     background-color: transparent;
     text-decoration: none;
 }
@@ -66,13 +33,22 @@ a {
 a:hover {
     color: orange;
     background-color: transparent;
-    text-decoration: underline;
+    text-decoration: none;
 }
 a:active {
     color: pink;
     background-color: transparent;
     text-decoration: underline;
 }
+#homeBtn {
+  color:#ff9900;
+  text-decoration:none;
+}
+
+#homeBtn:hover{
+  color: #ffffff;
+}
+
 #lists{
   text-align: left;
 }

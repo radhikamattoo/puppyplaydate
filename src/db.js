@@ -4,13 +4,28 @@ const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GoogleKey
 });
 
-const Chat = new Schema({
-  user1: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  user2: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-  text: Object
+const Conversation = new Schema({
+  participants: [{ type: Schema.Types.ObjectId, ref: 'User'}],
 });
 
-// Dog schema
+const Message = new Schema({
+  conversationId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+  body: {
+    type: String,
+    required: true
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
+},
+{
+  timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
+});
+
 const Dog = new Schema({
   name: String,
   age: Number,
@@ -20,7 +35,6 @@ const Dog = new Schema({
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
-// User schema
 const User = new Schema({
   first: { type: String, required: true}, //first name
   last: { type: String, required: true}, //last name
@@ -31,14 +45,15 @@ const User = new Schema({
   admin: Boolean,
   location: Number, //zip code
   created_at: Date,
-  dogs: [Dog],
+  dogs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Dog'}],
   friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-  chats: [Chat]
+  chats: [Conversation]
 });
 
 mongoose.model('User', User);
 mongoose.model('Dog', Dog);
-mongoose.model('Chat', Chat);
+mongoose.model('Conversation', Conversation);
+mongoose.model('Message', Message);
 
 // TODO: CHANGE TO PRODUCTION SERVER WHEN DEPLOYED
 mongoose.connect('mongodb://localhost/puppyplaydate');
