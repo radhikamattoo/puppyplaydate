@@ -73,6 +73,7 @@ router.post('/users/:username/edit', function(req, res, next){
   const username = req.params.username;
   if(req.user.username !== username) res.redirect('/users/' + req.user.username + '/edit');
   if(req.body.newName){ // Adding a new dog
+    // FIXME
     console.log(images.length)
     const images = req.body.newImages.map((path) =>{
       const extension = path.split(".")[1].toLowerCase();

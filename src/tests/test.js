@@ -20,15 +20,15 @@ describe('Home Page', function() {
   });
 });
 
-// describe('Authentication', function(){
-//   it('Should login user and redirect to their profile', function(done){
-//     authenticatedUser
-//     .post('/')
-//     .send({ username: process.env.username, password: process.env.password})
-//     .end(function(err, res){
-//       expect(res).to.redirect;
-//       expect('Location', '/Radhika-Mattoo');
-//       done();
-//     });
-//   });
-// });
+describe('Authentication', function(){
+  it('Should login user and redirect to their profile', function(done){
+    authenticatedUser
+    .post('/')
+    .send({ username: process.env.username, password: process.env.password})
+    .end(function(err, res){
+      expect(res).to.redirect;
+      expect('Location', '/radhika');
+      done();
+    });
+  });
+});
