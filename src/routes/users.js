@@ -23,10 +23,6 @@ router.use(function(req, res, next) {
   res.redirect('/');
 });
 
-router.get('/images/:filename', function(req, res, next){
-
-});
-
 /* GET user profile page */
 router.get('/users/:username',function(req, res, next) {
   const username = req.params.username;
@@ -37,17 +33,9 @@ router.get('/users/:username',function(req, res, next) {
     }else{ // viewing other's profile
       res.render('profile', { user : user, friends: user.friends, location: user.location, dogs: user.dogs, owner : false, chats: user.chats });
     }
-
   });
 });
-
-router.get('/users/:username/list', function(req, res, next){
-  const username = req.params.username;
-  User.findOne({ username: username }).populate('friends', ['first', 'last', 'username', 'location']).exec((err, user) =>{
-    res.send(user.friends);
-  });
-});
-
+/*GET on friend request*/
 router.get('/users/:username/add', function(req, res, next){
   const username = req.params.username;
   if(username !== req.user.username){
@@ -70,8 +58,8 @@ router.get('/users/:username/add', function(req, res, next){
 router.get('/users/:username/edit', function(req, res, next){
   const username = req.params.username;
   if(req.user.username !== username) res.redirect('/users/' + req.user.username + '/edit');
-  User.findOne({ username: username }, (err, user) => {
-    res.render('edit', { user: req.user});
+  User.findOne({ username: username }).populate('dogs', ['name', 'age', 'breed', 'description', 'images']).exec((err, user) =>{
+    res.render('edit', { user: user, dogs: user.dogs });
   });
 });
 
@@ -101,7 +89,7 @@ router.post('/users/:username/edit', upload.array('images', 3), function(req, re
       });
     });
   }else if(req.body.name){ //editing an existing dog
-
+    // TODO
   }else{
     res.render('error', { message: 'Cannot edit dog :(', username: req.user.username})
   }

@@ -1,11 +1,53 @@
+<br><br>
   <div class='container'>
     <div class='row'>
-      <div class="form" class="col-md-4">
-        <!--TODO: Edit existing dogs  -->
+      <div class="col-md-6">
+        <h5> Edit an existing Dog </h5>
+        {{#each dogs}}
+        <!--TODO: Wrap each dog form in a carousel -->
+          <div>
+            <form action="" method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="name"> Name:</label>
+                <input type="text" name="name" class="form-control" id="name" required="true">
+              </div>
+              <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number"  class="form-control" name="age" id="age" required="true">
+              </div>
+              <div class="form-group">
+                <label for="breed">Breed:</label>
+                <input type="text" class="form-control" name="breed" id="breed" required="true">
+              </div>
+              {{#if images}}
+                <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    {{#each images}}
+                      <div class="carousel-item active">
+                        <img src={{src}} width="100%" height="100%">
+                      </div>
+                    {{/each}}
+                  </div><br>
+                  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              {{/if}}
+                <button class="btn btn-warning" type="submit" style="margin-top:8px;">
+                  Update Dog
+                </button><br><br>
+            </form>
+          </div><br><br>
+        {{/each}}
       </div>
-      <div class="form" class="col-md-4">
+      <div  class="col-md-6">
         <h5> Add a new Dog </h5>
-        <form action="" +  method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label for="name"> Name:</label>
             <input type="text" name="newName" class="form-control" id="name" required="true">
@@ -17,18 +59,18 @@
           <div class="form-group">
             <label for="breed">Breed:</label>
             <input type="text" class="form-control" name="newBreed" id="breed" required="true">
-          </div>
+          </div><br><br>
           <div class="form-group">
             <label for="images" >Upload up to 3 pictures of your pup!</label><br>
               <input type="file" class="form-control" name="images" id="images" required="true" style="width:40%; margin: 0 auto;" multiple>
-          </div><br><br>
+          </div><br><br><br>
             <button class="btn btn-warning" type="submit">
               Add New Dog
-            </button> <br> <br>
+            </button>
         </form>
       </div>
     </div>
-  </div>
+  </div><br><br>
   <!-- Add a new dog  -->
   <!-- Delete a photo for a dog -->
   <!-- Upload photo for dog -->
