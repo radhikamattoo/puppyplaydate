@@ -5,11 +5,14 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const path = require('path');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Dog = mongoose.model('Dog');
 const Chat = mongoose.model('Conversation');
 const Message = mongoose.model('Message');
+const multer  = require('multer');
+const upload = multer({ dest: 'src/public/images' });
 
 // AUTHENTICATED ROUTES
 router.use(function(req, res, next) {
@@ -18,6 +21,10 @@ router.use(function(req, res, next) {
       return next();
   // if they aren't redirect them to the home page
   res.redirect('/');
+});
+
+router.get('/images/:filename', function(req, res, next){
+
 });
 
 /* GET user profile page */
@@ -69,33 +76,34 @@ router.get('/users/:username/edit', function(req, res, next){
 });
 
 /*POST on user edit page*/
-router.post('/users/:username/edit', function(req, res, next){
+router.post('/users/:username/edit', upload.array('images', 3), function(req, res, next){
   const username = req.params.username;
-  if(req.user.username !== username) res.redirect('/users/' + req.user.username + '/edit');
+  if(req.user.username !== username){ res.redirect('/users/' + req.user.username + '/edit');}
   if(req.body.newName){ // Adding a new dog
-    // FIXME
-    console.log(images.length)
-    const images = req.body.newImages.map((path) =>{
-      const extension = path.split(".")[1].toLowerCase();
-      const contentType = 'image/' + extension;
+    const images = req.files.map((img) =>{
+      const filepath = path.join('/images/', img.filename);
       return {
-        data: fs.readFileSync(path),
-        contentType: contentType
+        src: filepath
       }
     });
-    console.log(images);
     const dog = new Dog({
       name: req.body.newName,
       age: Number(req.body.newAge),
       breed: req.body.newBreed,
       images: images
     });
-    User.findOne({ username: username}, { $push: { dogs: dog } }, { new: true }, (err, dog) =>{
-      if (err)res.render('error', err);
-      res.redirect('/users/' + req.user.username);
+    dog.save((err, dog) =>{
+      console.log(dog, err);
+      if (err){ res.render('error', err); }
+      User.findOneAndUpdate({ username: username}, { $push: { dogs: dog._id } }, { new: true }, (err, dog) =>{
+        if (err){ res.render('error', err); }
+        else { res.redirect('/users/' + req.user.username); }
+      });
     });
-  }else{ //editing an existing dog
+  }else if(req.body.name){ //editing an existing dog
 
+  }else{
+    res.render('error', { message: 'Cannot edit dog :(', username: req.user.username})
   }
 });
 

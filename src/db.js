@@ -31,7 +31,7 @@ const Dog = new Schema({
   age: Number,
   breed: String,
   description: String,
-  images: [{ data: Buffer, contentType: String}],
+  images: [{ src: String }],
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 

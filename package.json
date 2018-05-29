@@ -23,6 +23,7 @@
     "mongod": "^2.0.0",
     "mongoose": "^4.13.13",
     "morgan": "~1.8.1",
+    "multer": "^1.3.0",
     "nodemon": "^1.17.5",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",

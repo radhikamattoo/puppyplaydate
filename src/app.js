@@ -30,7 +30,6 @@ const app = express();
 // app.set('env', 'production');
 console.log("\nApp is in " + app.get('env').toUpperCase() + " mode\n");
 
-
 // VIEW ENGINE
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
