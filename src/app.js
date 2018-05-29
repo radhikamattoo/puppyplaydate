@@ -14,6 +14,7 @@ const rn = require('random-number');
 const rnGen = rn.generator({integer: true});
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+
 require('dotenv').config();
 require('./db');
 const User = mongoose.model('User');
